@@ -6,7 +6,9 @@ function errorStatus(message, status) {
 
 function errorReturn(res, error) {
   if (!error.statusCode) {
+    console.error(error);
     error.statusCode = 500;
+    return res.status(error.statusCode).json({ error: "sever error" });
   }
   return res.status(error.statusCode).json({ error: error.message });
 }

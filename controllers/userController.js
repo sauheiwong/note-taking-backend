@@ -1,8 +1,13 @@
 import userHandler from "../handlers/userHandler.js";
 import myError from "../function/error.js";
+import { validationResult } from "express-validator";
 
 const signUp = async (req, res) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     const { username, password } = req.body;
     const newUser = await userHandler.registerUser(
       username.toLowerCase(),
@@ -18,10 +23,11 @@ const signUp = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    if (!username || !password) {
-      throw myError.errorStatus("please provide username and password", 400);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
+    const { username, password } = req.body;
 
     const user = await userHandler.loginUser(username.toLowerCase(), password);
 

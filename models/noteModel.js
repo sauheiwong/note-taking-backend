@@ -12,29 +12,29 @@ const NoteSchema = new mongoose.Schema({
   tag: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Tag",
+      ref: "tag",
     },
   ],
   owner: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "user",
     required: true,
   },
   editer: [
     {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
     },
   ],
   viewer: [
     {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
     },
   ],
   parentFolder: {
     type: Schema.Types.ObjectId,
-    ref: "Folder",
+    ref: "folder",
     default: null,
   },
   createdAt: {
@@ -47,7 +47,7 @@ const NoteSchema = new mongoose.Schema({
   },
 });
 
-NoteSchema.pre("save", (next) => {
+NoteSchema.pre("save", function (next) {
   this.updatedAt = new Date();
   next();
 });

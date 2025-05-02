@@ -3,7 +3,6 @@ import cors from "cors";
 import session from "express-session";
 import dotenv from "dotenv";
 dotenv.config();
-import requireLogin from "./middleware/requireLogin.js";
 import connectMongo from "connect-mongo";
 
 import { router } from "./router.js";
@@ -31,5 +30,3 @@ app.use(
 );
 
 app.use("/api", router);
-
-// app.use("/api/protected", requireLogin.requireLogin);
