@@ -43,6 +43,4 @@ FolderSchema.pre("save", (next) => {
   next();
 });
 
-const Folder = mongoose.model("Folder", FolderSchema);
-
-module.exports = Folder;
+export default mongoose.model("Folder", FolderSchema);

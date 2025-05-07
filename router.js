@@ -1,6 +1,7 @@
 import { Router } from "express";
 import userController from "./controllers/userController.js";
 import noteController from "./controllers/noteController.js";
+import tagController from "./controllers/tagController.js";
 import requireLogin from "./middleware/requireLogin.js";
 import userValidator from "./validator/userVailtor.js";
 
@@ -30,3 +31,8 @@ noteRouter.put(
   "/owner/removePremit/:id",
   noteController.noteRemoveEditerViewerById
 );
+
+//tag
+const tagRouter = Router();
+router.use("/protected/tag", requireLogin.requireLogin, tagRouter);
+tagRouter.get("/", tagController.tagList);

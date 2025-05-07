@@ -10,7 +10,7 @@ const TagSchema = new mongoose.Schema({
   },
   owner: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "user",
     required: true,
   },
   note: [
@@ -21,6 +21,4 @@ const TagSchema = new mongoose.Schema({
   ],
 });
 
-const Tag = mongoose.model("Tag", TagSchema);
-
-module.exports = Tag;
+export default mongoose.model("Tag", TagSchema);
