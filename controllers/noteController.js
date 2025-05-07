@@ -79,6 +79,17 @@ const noteRemoveEditerViewerById = async (req, res) => {
   }
 };
 
+const noteDeleteById = async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    const noteId = req.params.id;
+    const note = await noteHandler.noteDeleteById(noteId, userId);
+    return res.status(200).json(note);
+  } catch (error) {
+    return myError.errorReturn(res, error);
+  }
+};
+
 export default {
   noteList,
   noteSeachById,
@@ -86,4 +97,5 @@ export default {
   noteEditContentById,
   noteAddEditerViewerById,
   noteRemoveEditerViewerById,
+  noteDeleteById,
 };

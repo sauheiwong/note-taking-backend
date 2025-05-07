@@ -31,8 +31,10 @@ noteRouter.put(
   "/owner/removePremit/:id",
   noteController.noteRemoveEditerViewerById
 );
+noteRouter.delete("/:id", noteController.noteDeleteById);
 
 //tag
 const tagRouter = Router();
 router.use("/protected/tag", requireLogin.requireLogin, tagRouter);
 tagRouter.get("/", tagController.tagList);
+tagRouter.get("/:id", tagController.tagSeachById);

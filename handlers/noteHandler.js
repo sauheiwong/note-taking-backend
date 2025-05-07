@@ -203,6 +203,34 @@ const noteRemoveEditerViewerById = async (noteId, userId, body) => {
   }
 };
 
+const noteDeleteById = async (noteId, userId) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(noteId)) {
+      throw myError.errorStatus("Invaild id", 400);
+    }
+
+    const note = await Note.findById(noteId, {
+      __v: 0,
+    });
+    if (!note) {
+      throw myError.errorStatus("note not found", 404);
+    }
+
+    const hasViewPermission = note.owner.equals(userId);
+    if (!hasViewPermission) {
+      throw myError.errorStatus(
+        "You do not have permission to edit this note.",
+        403
+      );
+    }
+
+    const deleteNote = await Note.findOneAndDelete(noteId);
+    return deleteNote;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export default {
   noteSeach,
   noteSeachById,
@@ -210,4 +238,5 @@ export default {
   noteUpdateContentById,
   noteAddEditerViewerById,
   noteRemoveEditerViewerById,
+  noteDeleteById,
 };
