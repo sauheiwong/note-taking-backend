@@ -26,5 +26,7 @@ noteRouter.get("/:id", noteController.noteSeachById);
 noteRouter.post("/", noteController.noteCreate);
 noteRouter.put("/:id", noteController.noteEditContentById);
 noteRouter.put("/owner/addPremit/:id", noteController.noteAddEditerViewerById);
-
-// TODO: Fill in rest of CRUD routes
+noteRouter.put(
+  "/owner/removePremit/:id",
+  noteController.noteRemoveEditerViewerById
+);

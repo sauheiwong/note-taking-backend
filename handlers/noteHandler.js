@@ -97,7 +97,8 @@ const noteUpdateContentById = async (noteId, userId, body) => {
       runValidators: true,
     })
       .populate("owner", "username")
-      .populate("editer", "username");
+      .populate("editer", "username")
+      .populate("viewer", "username");
 
     return updatedNote;
   } catch (error) {
@@ -126,10 +127,13 @@ const noteAddEditerViewerById = async (noteId, userId, body) => {
       );
     }
 
-    const { editers, viewers } = body;
-    const updateData = {};
-    if (editers !== undefined) updateData.editers = editers;
-    if (viewers !== undefined) updateData.viewers = viewers;
+    let { editers, viewers } = body;
+    if (!editers) {
+      editers = [];
+    }
+    if (!viewers) {
+      viewers = [];
+    }
     const updatedNote = await Note.findByIdAndUpdate(
       noteId,
       {
@@ -150,10 +154,60 @@ const noteAddEditerViewerById = async (noteId, userId, body) => {
   }
 };
 
+const noteRemoveEditerViewerById = async (noteId, userId, body) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(noteId)) {
+      throw myError.errorStatus("Invaild id", 400);
+    }
+
+    const note = await Note.findById(noteId, {
+      __v: 0,
+    });
+    if (!note) {
+      throw myError.errorStatus("note not found", 404);
+    }
+
+    const hasViewPermission = note.owner.equals(userId);
+    if (!hasViewPermission) {
+      throw myError.errorStatus(
+        "You do not have permission to edit this note.",
+        403
+      );
+    }
+
+    let { editers, viewers } = body;
+    console.log(viewers);
+    if (!editers) {
+      editers = [];
+    }
+    if (!viewers) {
+      viewers = [];
+    }
+    const updatedNote = await Note.findByIdAndUpdate(
+      noteId,
+      {
+        $pull: {
+          editer: { $in: editers },
+          viewer: { $in: viewers },
+        },
+      },
+      { new: true }
+    )
+      .populate("owner", "username")
+      .populate("editer", "username")
+      .populate("viewer", "username");
+
+    return updatedNote;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export default {
   noteSeach,
   noteSeachById,
   noteCreate,
   noteUpdateContentById,
   noteAddEditerViewerById,
+  noteRemoveEditerViewerById,
 };

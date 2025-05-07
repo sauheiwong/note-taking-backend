@@ -64,10 +64,26 @@ const noteAddEditerViewerById = async (req, res) => {
   }
 };
 
+const noteRemoveEditerViewerById = async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    const noteId = req.params.id;
+    const note = await noteHandler.noteRemoveEditerViewerById(
+      noteId,
+      userId,
+      req.body
+    );
+    return res.status(200).json(note);
+  } catch (error) {
+    return myError.errorReturn(res, error);
+  }
+};
+
 export default {
   noteList,
   noteSeachById,
   noteCreate,
   noteEditContentById,
   noteAddEditerViewerById,
+  noteRemoveEditerViewerById,
 };
