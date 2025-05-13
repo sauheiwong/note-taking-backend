@@ -38,3 +38,6 @@ const tagRouter = Router();
 router.use("/protected/tag", requireLogin.requireLogin, tagRouter);
 tagRouter.get("/", tagController.tagList);
 tagRouter.get("/:id", tagController.tagSeachById);
+tagRouter.post("/", tagController.tagCreate);
+tagRouter.put("/:id", tagController.tagEditById);
+tagRouter.put("/addNote/:id", tagController.tagAddNoteById);

@@ -1,6 +1,8 @@
 import Note from "../models/noteModel.js";
+import Tag from "../models/tagModel.js";
 import mongoose from "mongoose";
 import myError from "../function/error.js";
+import checkId from "../function/checkId.js";
 
 const noteSeach = async (query, userId) => {
   try {
@@ -9,11 +11,17 @@ const noteSeach = async (query, userId) => {
       { editer: { $in: [userId] } },
       { viewer: { $in: [userId] } },
     ];
-    const note = await Note.find(
-      query,
-      "_id owner title tag updatedAt"
-    ).populate("owner", "username");
-    return note;
+    const noteArray = await Note.find(query, "_id owner title tag updatedAt")
+      .populate("owner", "username")
+      .populate("tag", "name owner");
+
+    // Filter tags to only include the user's own tags
+    for (let note of noteArray) {
+      if (note.tag) {
+        note.tag = note.tag.filter((tag) => tag.owner.equals(userId));
+      }
+    }
+    return noteArray;
   } catch (error) {
     throw error;
   }
@@ -30,7 +38,8 @@ const noteSeachById = async (noteId, userId) => {
     })
       .populate("owner", "username")
       .populate("editer", "username")
-      .populate("viewer", "username");
+      .populate("viewer", "username")
+      .populate("tag", "name owner");
     if (!note) {
       throw myError.errorStatus("note not found", 404);
     }
@@ -44,6 +53,10 @@ const noteSeachById = async (noteId, userId) => {
         "You do not have permission to read this note.",
         403
       );
+    }
+    // Filter tags to only include the user's own tags
+    if (note.tag) {
+      note.tag = note.tag.filter((tag) => tag.owner.equals(userId));
     }
 
     return note;
@@ -134,6 +147,9 @@ const noteAddEditerViewerById = async (noteId, userId, body) => {
     if (!viewers) {
       viewers = [];
     }
+    if (!(checkId.isVaildIdArray(editers) && checkId.isVaildIdArray(viewers))) {
+      throw myError.errorStatus("Invaild id", 400);
+    }
     const updatedNote = await Note.findByIdAndUpdate(
       noteId,
       {
@@ -183,6 +199,9 @@ const noteRemoveEditerViewerById = async (noteId, userId, body) => {
     if (!viewers) {
       viewers = [];
     }
+    if (!(checkId.isVaildIdArray(editers) && checkId.isVaildIdArray(viewers))) {
+      throw myError.errorStatus("Invaild id", 400);
+    }
     const updatedNote = await Note.findByIdAndUpdate(
       noteId,
       {
@@ -209,9 +228,7 @@ const noteDeleteById = async (noteId, userId) => {
       throw myError.errorStatus("Invaild id", 400);
     }
 
-    const note = await Note.findById(noteId, {
-      __v: 0,
-    });
+    const note = await Note.findById(noteId);
     if (!note) {
       throw myError.errorStatus("note not found", 404);
     }
@@ -223,7 +240,14 @@ const noteDeleteById = async (noteId, userId) => {
         403
       );
     }
-
+    for (let tag of note.tag) {
+      const tagId = tag._id;
+      await Tag.findByIdAndUpdate(tagId, {
+        $pull: {
+          note: noteId,
+        },
+      });
+    }
     const deleteNote = await Note.findOneAndDelete(noteId);
     return deleteNote;
   } catch (error) {

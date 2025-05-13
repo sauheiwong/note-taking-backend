@@ -12,7 +12,7 @@ const NoteSchema = new mongoose.Schema({
   tag: [
     {
       type: Schema.Types.ObjectId,
-      ref: "tag",
+      ref: "Tag",
     },
   ],
   owner: {
