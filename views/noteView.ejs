@@ -1,0 +1,27 @@
+<%- include("./partials/header.ejs") %>
+
+<div class="container mt-5 w-75">
+  <div class="row">
+    <div class="col-12"><h2><%= note.title %></h2></div>
+  </div>
+  <div class="row">
+    <% if (note.tag.length > 0) { %> 
+        <% note.tag.map((tag) => { %>
+          <div class="col-1">
+            <span class="badge rounded-pill bg-primary">
+              <%= tag.name %>
+            </span>
+        </div>
+        <% }).join(", ") }%> 
+  </div>
+  <div class="row mt-5">
+    <div class="col-6">
+      <textarea id="note" class="w-100" style="background-color: var(--bs-body-bg); color:var(--bs-body-color);height: 65vh; border: none;" name="content"><%= note.content %></textarea>
+    </div>
+    <div class="col-6" id="markdown"></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="/markdown.js"></script>
+
+<%- include("./partials/footer.ejs") %>

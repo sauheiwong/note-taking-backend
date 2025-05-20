@@ -22,6 +22,17 @@ const noteSeachById = async (req, res) => {
   }
 };
 
+const viewNoteSeachById = async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    const noteId = req.params.id;
+    const note = await noteHandler.noteSeachById(noteId, userId);
+    return res.render("noteView", { note });
+  } catch (error) {
+    return myError.errorReturn(res, error);
+  }
+};
+
 const noteCreate = async (req, res) => {
   try {
     const { title } = req.body;
@@ -93,6 +104,7 @@ const noteDeleteById = async (req, res) => {
 export default {
   noteList,
   noteSeachById,
+  viewNoteSeachById,
   noteCreate,
   noteEditContentById,
   noteAddEditerViewerById,
