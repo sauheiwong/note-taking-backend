@@ -51,10 +51,10 @@ noteRouter.delete("/:id", noteController.noteDeleteById);
 const tagRouter = Router();
 apiRouter.use("/protected/tag", requireLogin.requireLogin, tagRouter);
 tagRouter.get("/", tagController.tagList);
-tagRouter.get("/:id", tagController.tagSeachById);
-tagRouter.post("/", tagController.tagCreate);
+// tagRouter.get("/:id", tagController.tagSeachById);
+// tagRouter.post("/", tagController.tagCreate);
 tagRouter.put("/:id", tagController.tagEditById);
-tagRouter.put("/addNote/:id", tagController.tagAddNoteById);
+tagRouter.put("/addToNote/:id", tagController.tagAddToNote);
 
 export default {
   apiRouter,

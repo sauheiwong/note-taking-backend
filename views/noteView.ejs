@@ -8,14 +8,14 @@
       <h2><%= note.title %></h2>
     </div>
   </div>
-  <div class="row mt-1">
+  <div class="row mt-1" id="tagContainer">
     <% if (note.tag.length > 0) { %> 
         <% note.tag.map((tag) => { %>
           <div class="col-2">
             <button type="button" class="btn btn-sm btn-primary rounded-pill"><%= tag.name %></button>
         </div>
         <% }).join("") }%>
-        <div class="col-2">
+        <div class="col-2 order-last">
             <button type="button" class="btn btn-sm btn-secondary rounded-pill" data-bs-toggle="modal" data-bs-target="#addTagModal">
               + Tag
             </button>
@@ -41,7 +41,7 @@
         <div class="modal-body">
           <input value="<%= note._id %>" name="noteId" type="hidden" id="noteId"/>
           <label for="name">Tag Name:</label>
-          <input name="name" class="bg-secondary border border-1 border-primary rounded-pill px-2"/>
+          <input name="name" class="bg-secondary border border-1 border-primary rounded-pill px-2" id="tagName"/>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -54,5 +54,6 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script> <script src="/markdown.js" type="module"></script>
 <script src="/autoSave.js" type="module"></script>
+<script src="/addTag.js" type="module"></script>
 
 <%- include("./partials/footer.ejs") %>

@@ -23,24 +23,18 @@ const tagSeach = async (query, userId) => {
   }
 };
 
-const tagSeachById = async (tagId, userId) => {
+const tagSeachOrCreate = async (tagName, userId) => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(tagId)) {
-      throw myError.errorStatus("Invaild id", 400);
-    }
-
-    const tag = await Tag.findById(tagId, {
+    console.log(tagName);
+    let tag = await Tag.findOne({ name: tagName, owner: userId }, {
       __v: 0,
-    }).populate("note", "title");
+    });
     if (!tag) {
-      throw myError.errorStatus("tag not found", 404);
-    }
-
-    if (!tag.owner.equals(userId)) {
-      throw myError.errorStatus(
-        "You do not have permission to read this tag.",
-        403
-      );
+      tag = new Tag({
+        name: tagName,
+        owner: userId
+      });
+      await tag.save();
     }
 
     return tag;
@@ -49,19 +43,19 @@ const tagSeachById = async (tagId, userId) => {
   }
 };
 
-const tagCreate = async (body, userId) => {
-  try {
-    const { name } = body;
-    const newTag = new Tag({
-      name,
-      owner: userId,
-    });
-    const savedTag = await newTag.save();
-    return savedTag;
-  } catch (error) {
-    throw error;
-  }
-};
+// const tagCreate = async (body, userId) => {
+//   try {
+//     const { name } = body;
+//     const newTag = new Tag({
+//       name,
+//       owner: userId,
+//     });
+//     const savedTag = await newTag.save();
+//     return savedTag;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 const tagEditById = async (tagId, body, userId) => {
   try {
@@ -92,77 +86,53 @@ const tagEditById = async (tagId, body, userId) => {
   }
 };
 
-const tagAddNoteById = async (tagId, noteIdArray, userId) => {
+const tagAddNoteById = async (tag, noteId, userId) => {
   try {
-    if (!noteIdArray) {
+    if (!noteId) {
       throw myError.errorStatus("please provide noteId", 400);
     }
-    if (!mongoose.Types.ObjectId.isValid(tagId)) {
+
+    if (!mongoose.Types.ObjectId.isValid(noteId)) {
       throw myError.errorStatus("Invaild id", 400);
     }
 
-    if (!checkId.isVaildIdArray(noteIdArray)) {
-      throw myError.errorStatus("Invaild id", 400);
-    }
-
-    if (noteIdArray.length === 0) {
-      throw myError.errorStatus("please provide note id", 400);
-    }
-
-    for (let noteId of noteIdArray) {
-      const note = await Note.findById(noteId, {
-        __v: 0,
-      });
-      if (!note) {
-        throw myError.errorStatus("note not found", 404);
-      }
-      const hasViewPermission =
-        note.owner.equals(userId) ||
-        note.editer.some((editorId) => editorId.equals(userId)) ||
-        note.viewer.some((viewerId) => viewerId.equals(userId));
-      if (!hasViewPermission) {
-        throw myError.errorStatus(
-          "You do not have permission to edit this note.",
-          403
-        );
-      }
-    }
-
-    const tag = await Tag.findById(tagId, {
+    const note = await Note.findById(noteId, {
       __v: 0,
     });
-    if (!tag) {
-      throw myError.errorStatus("tag or note not found", 404);
-    }
 
-    if (!tag.owner.equals(userId)) {
+    if (!note) {
+      throw myError.errorStatus("note not found", 404);
+    }
+    const hasViewPermission =
+      note.owner.equals(userId) ||
+      note.editer.some((editorId) => editorId.equals(userId)) ||
+      note.viewer.some((viewerId) => viewerId.equals(userId));
+    if (!hasViewPermission) {
       throw myError.errorStatus(
-        "You do not have permission to read note.",
+        "You do not have permission to edit this note.",
         403
       );
     }
 
-    for (let noteId of noteIdArray) {
-      const note = await Note.findByIdAndUpdate(noteId, {
-        $addToSet: {
-          tag: tagId,
-        },
-      });
-    }
+    const tagId = tag._id;
+
+    await Note.findByIdAndUpdate(noteId, {
+      $addToSet: {
+        tag: tagId,
+      },
+    });
 
     const updatedTag = await Tag.findByIdAndUpdate(
       tagId,
       {
         $addToSet: {
-          note: { $each: noteIdArray },
+          note: noteId,
         },
       },
       { new: true }
     )
-      .populate("owner", "username")
-      .populate("note", "title");
 
-    return updatedTag;
+    return true;
   } catch (error) {
     throw error;
   }
@@ -170,8 +140,9 @@ const tagAddNoteById = async (tagId, noteIdArray, userId) => {
 
 export default {
   tagSeach,
-  tagSeachById,
-  tagCreate,
+  // tagSeachById,
+  // tagCreate,
+  tagSeachOrCreate,
   tagEditById,
   tagAddNoteById,
 };
