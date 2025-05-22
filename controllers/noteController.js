@@ -38,6 +38,7 @@ const noteCreate = async (req, res) => {
     const { title } = req.body;
     const userId = req.session.userId;
     const note = await noteHandler.noteCreate(title, userId);
+    return res.redirect(`/protected/view/note/${note._id}`);
     return res.status(200).json(note);
   } catch (error) {
     console.error(error);

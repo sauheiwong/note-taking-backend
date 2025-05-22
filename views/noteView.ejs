@@ -1,27 +1,58 @@
 <%- include("./partials/header.ejs") %>
 
 <div class="container mt-5 w-75">
-  <div class="row">
-    <div class="col-12"><h2><%= note.title %></h2></div>
+  <div class="position-absolute" id="announcement" style="right: 15%;">
   </div>
   <div class="row">
+    <div class="col-12 h-100">
+      <h2><%= note.title %></h2>
+    </div>
+  </div>
+  <div class="row mt-1">
     <% if (note.tag.length > 0) { %> 
         <% note.tag.map((tag) => { %>
-          <div class="col-1">
-            <span class="badge rounded-pill bg-primary">
-              <%= tag.name %>
-            </span>
+          <div class="col-2">
+            <button type="button" class="btn btn-sm btn-primary rounded-pill"><%= tag.name %></button>
         </div>
-        <% }).join(", ") }%> 
+        <% }).join("") }%>
+        <div class="col-2">
+            <button type="button" class="btn btn-sm btn-secondary rounded-pill" data-bs-toggle="modal" data-bs-target="#addTagModal">
+              + Tag
+            </button>
+        </div>
   </div>
   <div class="row mt-5">
     <div class="col-6">
-      <textarea id="note" class="w-100" style="background-color: var(--bs-body-bg); color:var(--bs-body-color);height: 65vh; border: none;" name="content"><%= note.content %></textarea>
+      <textarea id="note" class="w-100 border border-primary bg-secondary text-body overflow-y-auto" style="height: 65vh;" name="content"><%= note.content %></textarea>
     </div>
-    <div class="col-6" id="markdown"></div>
+    <div class="col-6 border-primary overflow-y-auto" id="markdown" style="height: 65vh;"></div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addTagModal" tabindex="-1" aria-labelledby="addTagModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addTagModalLabel">Your Tag</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="add-form">
+        <div class="modal-body">
+          <input value="<%= note._id %>" name="noteId" type="hidden" id="noteId"/>
+          <label for="name">Tag Name:</label>
+          <input name="name" class="bg-secondary border border-1 border-primary rounded-pill px-2"/>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="add-tag">Add Tag</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script> <script src="/markdown.js" type="module"></script>
+<script src="/autoSave.js" type="module"></script>
 
 <%- include("./partials/footer.ejs") %>

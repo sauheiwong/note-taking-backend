@@ -3,6 +3,11 @@ import Tag from "../models/tagModel.js";
 import mongoose from "mongoose";
 import myError from "../function/error.js";
 import checkId from "../function/checkId.js";
+import createDOMPurify from "dompurify";
+import { JSDOM } from "jsdom";
+
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
 
 const noteSeach = async (query, userId) => {
   try {
@@ -101,10 +106,16 @@ const noteUpdateContentById = async (noteId, userId, body) => {
       );
     }
 
-    const { title, content } = body;
+    let { title, content } = body;
+
     const updateData = {};
     if (title !== undefined) updateData.title = title;
-    if (content !== undefined) updateData.content = content;
+    if (content !== undefined) {
+      content = DOMPurify.sanitize(content, {
+        USE_PROFILES: { html: true }
+      })
+      updateData.content = content
+    }
     const updatedNote = await Note.findByIdAndUpdate(noteId, updateData, {
       new: true,
       runValidators: true,
