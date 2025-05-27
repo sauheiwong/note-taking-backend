@@ -51,10 +51,9 @@ const tagAddToNote = async (req, res) => {
     const noteId = req.params.id;
     const userId = req.session.userId;
     const { tagName } = req.body;
-    console.log("req.body is: ", req.body)
     const tag = await tagHandler.tagSeachOrCreate(tagName, userId);
     const isSuccess = await tagHandler.tagAddNoteById(tag, noteId, userId);
-    return res.status(200).json({message: "ok"});
+    return res.status(200).json(tag);
   } catch (error) {
     return myError.errorReturn(res, error);
   }

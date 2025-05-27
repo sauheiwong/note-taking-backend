@@ -16,7 +16,7 @@ apiRouter.post(
   [userValidator.usernameValidator(), userValidator.passwordValidator()],
   userController.signUp
 );
-viewRouter.get("/login", userController.loginView);
+viewRouter.get("/", userController.loginView);
 apiRouter.post(
   "/login",
   [userValidator.usernameValidator(), userValidator.passwordValidator()],

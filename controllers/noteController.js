@@ -93,6 +93,7 @@ const noteRemoveEditerViewerById = async (req, res) => {
 
 const noteDeleteById = async (req, res) => {
   try {
+    console.log("backend sever delete note id: ", req.params.id)
     const userId = req.session.userId;
     const noteId = req.params.id;
     const note = await noteHandler.noteDeleteById(noteId, userId);

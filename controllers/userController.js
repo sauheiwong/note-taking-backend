@@ -17,7 +17,7 @@ const signUp = async (req, res) => {
       username.toLowerCase(),
       password
     );
-    return res.redirect('/login')
+    return res.redirect('/')
     return res
       .status(201)
       .json({ message: "register successful", user: newUser.username });

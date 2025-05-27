@@ -259,7 +259,7 @@ const noteDeleteById = async (noteId, userId) => {
         },
       });
     }
-    const deleteNote = await Note.findOneAndDelete(noteId);
+    const deleteNote = await Note.findOneAndDelete({ _id: noteId });
     return deleteNote;
   } catch (error) {
     throw error;

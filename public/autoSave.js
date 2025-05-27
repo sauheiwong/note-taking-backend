@@ -63,5 +63,6 @@ const debouncedSave = debounce(saveContentToServer, 1000);
 
 editorElement.addEventListener("input", () => {
     const content = editorElement.value;
+    announcement.innerHTML = '';
     debouncedSave(content);
 })
