@@ -68,7 +68,6 @@ const debouncedSearch = debounce(searchNote, 1000);
 
 search.addEventListener("input", () => {
     const query = search.value;
-    console.log(!query || typeof query !== "string");
 
     searchResults.innerHTML = "";
 
