@@ -1,0 +1,46 @@
+<%- include("./partials/header.ejs") %>
+<input value="<%= note._id %>" name="noteId" type="hidden" id="noteId"/>
+<div class="container mt-5 w-75">
+  <div class="position-absolute" id="announcement" style="right: 15%;">
+  </div>
+  <div class="row">
+    <div class="col-12 h-100 border border-secondary">
+      <h2 id="title" data-bs-toggle="modal" data-bs-target="#editTitleModal" class="btn fs-2 text-decoration-underline">
+        <%= note.title %>
+      </h2>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-6">
+      <textarea id="note" class="w-100 border border-primary bg-secondary text-body overflow-y-auto" style="height: 65vh;" name="content"><%= note.content %></textarea>
+    </div>
+    <div class="col-6 border-primary overflow-y-auto" id="markdown" style="height: 65vh;"></div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editTitleModal" tabindex="-1" aria-labelledby="editTitleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editTitleModalLabel">Your Title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <div class="modal-body">
+          <label for="name">Title:</label>
+          <input name="title" class="bg-secondary border border-1 border-primary rounded-pill px-2 text-secondary" id="newTitle" placeholder="<%= note.title %>"/>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="edit-title" data-bs-dismiss="modal">Change Title</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script> <script src="/markdown.js" type="module"></script>
+<script src="/autoSave.js" type="module"></script>
+<script src="/titleEdit.js" type="module"></script>
+
+<%- include("./partials/footer.ejs") %>
