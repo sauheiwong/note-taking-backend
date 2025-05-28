@@ -36,16 +36,16 @@ viewRouter.use(
   requireLogin.requireLogin,
   noteViewRouter
 );
-// noteRouter.get("/", noteController.noteList);
+noteRouter.get("/", noteController.noteList);
 noteViewRouter.get("/:id", noteController.viewNoteSeachById);
 noteRouter.get("/:id", noteController.noteSeachById);
 noteRouter.post("/", noteController.noteCreate);
 noteRouter.put("/:id", noteController.noteEditContentById);
-noteRouter.put("/owner/addPremit/:id", noteController.noteAddEditerViewerById);
-noteRouter.put(
-  "/owner/removePremit/:id",
-  noteController.noteRemoveEditerViewerById
-);
+// noteRouter.put("/owner/addPremit/:id", noteController.noteAddEditerViewerById);
+// noteRouter.put(
+//   "/owner/removePremit/:id",
+//   noteController.noteRemoveEditerViewerById
+// );
 noteRouter.delete("/:id", noteController.noteDeleteById);
 
 //tag

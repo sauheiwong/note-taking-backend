@@ -3,8 +3,8 @@ import myError from "../function/error.js";
 
 const noteList = async (req, res) => {
   try {
-    const query = req.query;
-    const note = await noteHandler.noteSeach(query, req.session.userId);
+    const { title } = req.query;
+    const note = await noteHandler.noteSeach({ title }, req.session.userId);
     return res.status(200).json(note);
   } catch (error) {
     return myError.errorReturn(res, error);
