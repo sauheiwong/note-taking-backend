@@ -17,16 +17,8 @@
   <div class="row justify-between row-gap-5 colum-gap-3 mt-2">
     <% notes.map((note) => { %>
     <div class="col-4" style="height: 150px;" id="<%= note._id %>">
-      <div class="bg-secondary border border-primary-subtle w-75 pt-3 h-100 rounded-5 position-relative">
-        <h4><a href="/protected/view/note/<%= note._id %>"><%= note.title %></a></h4>
-        <% if(note.tag.length > 0){ %>
-            <%= note.tag.splice(0, 3).map(tag => tag.name).join(", ") %>
-            <% if (note.tag.length >= 3) { %>
-              ...
-            <% } %>
-        <% } else { %>
-            <p>no tag</p>
-        <% } %>
+      <div class="bg-secondary border border-primary-subtle w-75 h-100 rounded-5 position-relative d-flex justify-content-center align-items-center">
+        <h4 class="text-break"><a href="/protected/view/note/<%= note._id %>"><%= note.title %></a></h4>
         <button class="btn btn-sm btn-danger rounded-pill note-delete-btn position-absolute delete-btn" data-bs-toggle="modal" data-bs-target="#deleteModal" data-note-id="<%= note._id %>"    data-note-title="<%= note.title %>" style="bottom: 5%; right: 5%" >
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>

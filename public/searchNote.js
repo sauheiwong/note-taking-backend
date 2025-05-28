@@ -25,6 +25,9 @@ function debounce(func, delay){
 }
 
 const searchNote = ([{ title }]) => {
+    if (title.length === 0){
+        return
+    }
     fetch(`${API_BASE_URL}/api/protected/note/?title=${title}`,
         { method: "GET" }
     )
@@ -65,13 +68,10 @@ const debouncedSearch = debounce(searchNote, 1000);
 
 search.addEventListener("input", () => {
     const query = search.value;
+    console.log(!query || typeof query !== "string");
 
     searchResults.innerHTML = "";
 
-    if (!query || typeof query !== "string"){
-        return
-    }
-
-    const title = titleCandidates.replace(/\s+/g, "").trim();
+    const title = query.replace(/\s+/g, "").trim();
     debouncedSearch({ title })
 })
