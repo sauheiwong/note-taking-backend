@@ -57,9 +57,21 @@ const login = async (req, res) => {
   }
 };
 
+const logout = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error destroying session:", err);
+      return res.redirect("/protected/home"); // Or handle the error as appropriate
+    }
+    res.clearCookie("connect.sid"); // Clear the session cookie
+    return res.redirect("/"); // Redirect to the login page or home page
+  });
+};
+
 export default {
   signUp,
   login,
   signUpView,
   loginView,
+  logout,
 };

@@ -1,7 +1,7 @@
 <%- include("./partials/header.ejs") %>
 
 <div class="container w-50 mt-5">
-  
+  <h2><%= title %></h2>
   <form action="/api/login" method="POST">
     <div class="mb-3">
       <label for="username" class="form-label">Username</label>
@@ -22,7 +22,7 @@
   <strong>Error</strong> <%= error.message %>
 </div>
     <% } %>
-    <button type="submit" class="btn btn-primary"><%= title %></button>
+    <button type="submit" class="btn btn-primary mt-5"><%= title %></button>
   </form>
 </div>
 

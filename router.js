@@ -22,9 +22,10 @@ apiRouter.post(
   [userValidator.usernameValidator(), userValidator.passwordValidator()],
   userController.login
 );
+viewRouter.get("/logout", userController.logout);
 const protectViewRouter = Router();
 viewRouter.use("/protected", requireLogin.requireLogin, protectViewRouter);
-protectViewRouter.get("/home", homeController.homeView);
+protectViewRouter.get("/home", requireLogin.requireLogin, homeController.homeView);
 
 //note
 const noteRouter = Router();

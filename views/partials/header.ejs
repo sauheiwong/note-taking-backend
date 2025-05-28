@@ -34,14 +34,18 @@
                   <span class="visually-hidden">(current)</span>
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/">Login</a>
+              <% if (!user) { %>
+                <li class="nav-item">
+                  <a class="nav-link" href="/">Login</a>
+                </li>
+                <li>
+                  <a class="nav-link" href="/signup">Register</a>
+                </li>
+                <% } else { %>
+                <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
               </li>
-              <li class="nav-item">
-                <form action="/api/protected/note" method="POST">
-                  <button class="nav-link" href="#">Create Note</button>
-                </form>
-              </li>
+              <% } %>
             </ul>
             <form class="d-flex">
               <input
