@@ -1,0 +1,10 @@
+<%- include("./partials/header.ejs") %>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="text-center bg-warning p-5 rounded-pill text-dark">
+        <p>
+            <%= error.statusCode %> : <%= error.message %>
+        </p>
+    </div>
+</div>
+
+<%- include("./partials/footer.ejs") %>
