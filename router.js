@@ -37,7 +37,6 @@ viewRouter.use(
 );
 noteRouter.get("/", noteController.noteList);
 noteViewRouter.get("/:id", noteController.viewNoteSeachById);
-// noteRouter.get("/:id", noteController.noteSeachById);
 noteRouter.post("/", noteController.noteCreate);
 noteRouter.put("/:id", noteController.noteEditContentById);
 noteRouter.delete("/:id", noteController.noteDeleteById);

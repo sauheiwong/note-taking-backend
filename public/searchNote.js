@@ -9,7 +9,7 @@ const failPop = (message) => {
     return `
             <div class="alert alert-dismissible alert-danger">
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <strong>Auto Save Fail</strong> ${message}
+                <strong>Error</strong> ${message}
             </div>
             `
 }
