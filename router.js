@@ -21,7 +21,7 @@ apiRouter.post(
   [userValidator.usernameValidator(), userValidator.passwordValidator()],
   userController.login
 );
-viewRouter.get("/logout", userController.logout);
+apiRouter.get("/logout", userController.logout);
 const protectViewRouter = Router();
 
 // protected view router

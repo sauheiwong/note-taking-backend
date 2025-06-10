@@ -40,7 +40,6 @@ const searchNote = ([{ title }]) => {
         return response.json();
     })
     .then(data => {
-        console.log("data: ", data);
         if (data.length === 0){
             searchResults.innerHTML = `
             <li>

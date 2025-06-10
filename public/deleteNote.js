@@ -6,7 +6,6 @@ const deleteNoteTitleContainer = document.getElementById("delete-note-title");
 document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
         deleteNoteId = btn.getAttribute("data-note-id");
-        console.log(deleteNoteId, btn.getAttribute("data-note-title"));
         deleteNoteTitleContainer.textContent = btn.getAttribute("data-note-title");
     })
 })
@@ -30,7 +29,6 @@ const failPop = (message) => {
 }
 
 document.getElementById("delete-note").addEventListener("click", () => {
-    console.log("deleted: ", deleteNoteId, deleteNoteTitleContainer.textContent)
     fetch(`${API_BASE_URL}/api/protected/notes/${deleteNoteId}`, {
             method: "DELETE"
         })
