@@ -52,6 +52,7 @@
               </li>
               <% } %>
             </ul>
+            <% if (user) { %>
             <div class="dropdown d-flex">
               <input
                 class="form-control me-sm-2 dropdown-toggle"
@@ -63,6 +64,7 @@
               <ul class="dropdown-menu" id="search-results">
               </ul>
             </div>
+            <% } %>
           </div>
         </div>
       </nav>

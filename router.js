@@ -29,9 +29,9 @@ protectViewRouter.get("/home", requireLogin.requireLogin, homeController.homeVie
 //note
 const noteRouter = Router();
 const noteViewRouter = Router();
-apiRouter.use("/protected/note", requireLogin.requireLogin, noteRouter);
+apiRouter.use("/protected/notes", requireLogin.requireLogin, noteRouter);
 viewRouter.use(
-  "/protected/view/note",
+  "/protected/view/notes",
   requireLogin.requireLogin,
   noteViewRouter
 );
@@ -40,6 +40,7 @@ noteViewRouter.get("/:id", noteController.viewNoteSeachById);
 noteRouter.post("/", noteController.noteCreate);
 noteRouter.put("/:id", noteController.noteEditContentById);
 noteRouter.delete("/:id", noteController.noteDeleteById);
+noteRouter.post("/leaveSave/:id", noteController.noteEditContentById)
 
 export default {
   apiRouter,

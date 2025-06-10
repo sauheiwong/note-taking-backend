@@ -28,7 +28,7 @@ const searchNote = ([{ title }]) => {
     if (title.length === 0){
         return
     }
-    fetch(`${API_BASE_URL}/api/protected/note/?title=${title}`,
+    fetch(`${API_BASE_URL}/api/protected/notes/?title=${title}`,
         { method: "GET" }
     )
     .then(response => {
@@ -51,7 +51,7 @@ const searchNote = ([{ title }]) => {
         }
         searchResults.innerHTML = data.map((note) => `
         <li>
-            <a class="dropdown-item" href="${API_BASE_URL}/protected/view/note/${note._id}">
+            <a class="dropdown-item" href="${API_BASE_URL}/protected/view/notes/${note._id}">
                 ${note.title}
             </a>
         </li>

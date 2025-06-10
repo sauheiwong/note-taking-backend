@@ -19,7 +19,7 @@ document.getElementById("edit-title").addEventListener("click", () => {
             setTimeout(() => {announcement.innerHTML = ''}, 10000);
         return 
     }
-    fetch(`${API_BASE_URL}/api/protected/note/${noteId}`, {
+    fetch(`${API_BASE_URL}/api/protected/notes/${noteId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

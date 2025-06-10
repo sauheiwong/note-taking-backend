@@ -31,7 +31,7 @@ const failPop = (message) => {
 
 document.getElementById("delete-note").addEventListener("click", () => {
     console.log("deleted: ", deleteNoteId, deleteNoteTitleContainer.textContent)
-    fetch(`${API_BASE_URL}/api/protected/note/${deleteNoteId}`, {
+    fetch(`${API_BASE_URL}/api/protected/notes/${deleteNoteId}`, {
             method: "DELETE"
         })
         .then(response => {
