@@ -23,6 +23,8 @@ apiRouter.post(
 );
 viewRouter.get("/logout", userController.logout);
 const protectViewRouter = Router();
+
+// protected view router
 viewRouter.use("/protected", requireLogin.requireLogin, protectViewRouter);
 protectViewRouter.get("/home", requireLogin.requireLogin, homeController.homeView);
 
@@ -40,7 +42,6 @@ noteViewRouter.get("/:id", noteController.viewNoteSeachById);
 noteRouter.post("/", noteController.noteCreate);
 noteRouter.put("/:id", noteController.noteEditContentById);
 noteRouter.delete("/:id", noteController.noteDeleteById);
-noteRouter.post("/leaveSave/:id", noteController.noteEditContentById)
 
 export default {
   apiRouter,

@@ -67,7 +67,5 @@ export default {
   viewNoteSeachById,
   noteCreate,
   noteEditContentById,
-  // noteAddEditerViewerById,
-  // noteRemoveEditerViewerById,
   noteDeleteById,
 };

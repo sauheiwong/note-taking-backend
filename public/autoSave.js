@@ -3,7 +3,7 @@ import { API_BASE_URL } from "./config.js";
 const editorElement = document.getElementById("note");
 const noteId = document.getElementById("noteId").value;
 
-let isSaved = false;
+let isSaved = true;
 
 const successPop = `
 <div class="alert alert-dismissible alert-success rounded-pill" id="save-success">
@@ -75,7 +75,6 @@ editorElement.addEventListener("input", () => {
 window.addEventListener("beforeunload", (event) => {
     if (!isSaved) {
         event.preventDefault(); // Cancel the event
-        console.log("in !isSaved");
         event.returnValue = "You have unsaved changes. Leaving now will discard them."; // Chrome requires
     }
 })

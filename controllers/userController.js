@@ -52,10 +52,10 @@ const logout = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.error("Error destroying session:", err);
-      return res.redirect("/protected/home"); // Or handle the error as appropriate
+      return res.redirect("/protected/home"); 
     }
     res.clearCookie("connect.sid"); // Clear the session cookie
-    return res.redirect("/"); // Redirect to the login page or home page
+    return res.redirect("/"); 
   });
 };
 

@@ -14,12 +14,6 @@ const NoteSchema = new mongoose.Schema({
     ref: "user",
     required: true,
   },
-  viewer: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "user",
-    },
-  ],
   createdAt: {
     type: Date,
     default: Date.now,
