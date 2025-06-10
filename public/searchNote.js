@@ -9,7 +9,7 @@ const failPop = (message) => {
     return `
             <div class="alert alert-dismissible alert-danger">
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <strong>Auto Save Fail</strong> ${message}
+                <strong>Error</strong> ${message}
             </div>
             `
 }
@@ -28,7 +28,7 @@ const searchNote = ([{ title }]) => {
     if (title.length === 0){
         return
     }
-    fetch(`${API_BASE_URL}/api/protected/note/?title=${title}`,
+    fetch(`${API_BASE_URL}/api/protected/notes/?title=${title}`,
         { method: "GET" }
     )
     .then(response => {
@@ -40,7 +40,6 @@ const searchNote = ([{ title }]) => {
         return response.json();
     })
     .then(data => {
-        console.log("data: ", data);
         if (data.length === 0){
             searchResults.innerHTML = `
             <li>
@@ -51,7 +50,7 @@ const searchNote = ([{ title }]) => {
         }
         searchResults.innerHTML = data.map((note) => `
         <li>
-            <a class="dropdown-item" href="${API_BASE_URL}/protected/view/note/${note._id}">
+            <a class="dropdown-item" href="${API_BASE_URL}/protected/view/notes/${note._id}">
                 ${note.title}
             </a>
         </li>
@@ -68,7 +67,6 @@ const debouncedSearch = debounce(searchNote, 1000);
 
 search.addEventListener("input", () => {
     const query = search.value;
-    console.log(!query || typeof query !== "string");
 
     searchResults.innerHTML = "";
 

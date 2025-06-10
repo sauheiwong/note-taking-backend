@@ -21,23 +21,24 @@ apiRouter.post(
   [userValidator.usernameValidator(), userValidator.passwordValidator()],
   userController.login
 );
-viewRouter.get("/logout", userController.logout);
+apiRouter.get("/logout", userController.logout);
 const protectViewRouter = Router();
+
+// protected view router
 viewRouter.use("/protected", requireLogin.requireLogin, protectViewRouter);
 protectViewRouter.get("/home", requireLogin.requireLogin, homeController.homeView);
 
 //note
 const noteRouter = Router();
 const noteViewRouter = Router();
-apiRouter.use("/protected/note", requireLogin.requireLogin, noteRouter);
+apiRouter.use("/protected/notes", requireLogin.requireLogin, noteRouter);
 viewRouter.use(
-  "/protected/view/note",
+  "/protected/view/notes",
   requireLogin.requireLogin,
   noteViewRouter
 );
 noteRouter.get("/", noteController.noteList);
 noteViewRouter.get("/:id", noteController.viewNoteSeachById);
-// noteRouter.get("/:id", noteController.noteSeachById);
 noteRouter.post("/", noteController.noteCreate);
 noteRouter.put("/:id", noteController.noteEditContentById);
 noteRouter.delete("/:id", noteController.noteDeleteById);

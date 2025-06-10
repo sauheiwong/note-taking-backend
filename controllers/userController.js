@@ -18,12 +18,8 @@ const signUp = async (req, res) => {
       password
     );
     return res.redirect('/')
-    return res
-      .status(201)
-      .json({ message: "register successful", user: newUser.username });
   } catch (error) {
     return res.render("signup", { title: "Sign Up", error: error.message });
-    return myError.errorReturn(res, error);
   }
 };
 
@@ -46,14 +42,9 @@ const login = async (req, res) => {
     req.session.loggedIn = true;
 
     return res.redirect("/protected/home");
-    return res.status(201).json({
-      message: "login successful",
-      user: user.username,
-    });
   } catch (error) {
     console.error(error);
     return res.render("login", { title: "Login", error: error });
-    return myError.errorReturn(res, error);
   }
 };
 
@@ -61,10 +52,10 @@ const logout = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.error("Error destroying session:", err);
-      return res.redirect("/protected/home"); // Or handle the error as appropriate
+      return res.redirect("/protected/home"); 
     }
     res.clearCookie("connect.sid"); // Clear the session cookie
-    return res.redirect("/"); // Redirect to the login page or home page
+    return res.redirect("/"); 
   });
 };
 

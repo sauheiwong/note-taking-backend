@@ -8,9 +8,9 @@ function errorReturn(res, error) {
   if (!error.statusCode) {
     console.error(error);
     error.statusCode = 500;
-    return res.status(error.statusCode).json({ error: "sever error" });
+    error.message = "sever error";
   }
-  return res.status(error.statusCode).json({ error: error.message });
+  return res.render("errorPage", { error });
 }
 
 export default {

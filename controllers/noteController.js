@@ -11,17 +11,6 @@ const noteList = async (req, res) => {
   }
 };
 
-const noteSeachById = async (req, res) => {
-  try {
-    const userId = req.session.userId;
-    const noteId = req.params.id;
-    const note = await noteHandler.noteSeachById(noteId, userId);
-    return res.status(200).json(note);
-  } catch (error) {
-    return myError.errorReturn(res, error);
-  }
-};
-
 const viewNoteSeachById = async (req, res) => {
   try {
     const userId = req.session.userId;
@@ -38,7 +27,7 @@ const noteCreate = async (req, res) => {
     const { title } = req.body;
     const userId = req.session.userId;
     const note = await noteHandler.noteCreate(title, userId);
-    return res.redirect(`/protected/view/note/${note._id}`);
+    return res.redirect(`/protected/view/notes/${note._id}`);
     return res.status(200).json(note);
   } catch (error) {
     console.error(error);
@@ -61,39 +50,8 @@ const noteEditContentById = async (req, res) => {
   }
 };
 
-const noteAddEditerViewerById = async (req, res) => {
-  try {
-    const userId = req.session.userId;
-    const noteId = req.params.id;
-    const note = await noteHandler.noteAddEditerViewerById(
-      noteId,
-      userId,
-      req.body
-    );
-    return res.status(200).json(note);
-  } catch (error) {
-    return myError.errorReturn(res, error);
-  }
-};
-
-const noteRemoveEditerViewerById = async (req, res) => {
-  try {
-    const userId = req.session.userId;
-    const noteId = req.params.id;
-    const note = await noteHandler.noteRemoveEditerViewerById(
-      noteId,
-      userId,
-      req.body
-    );
-    return res.status(200).json(note);
-  } catch (error) {
-    return myError.errorReturn(res, error);
-  }
-};
-
 const noteDeleteById = async (req, res) => {
   try {
-    console.log("backend sever delete note id: ", req.params.id)
     const userId = req.session.userId;
     const noteId = req.params.id;
     const note = await noteHandler.noteDeleteById(noteId, userId);
@@ -105,11 +63,8 @@ const noteDeleteById = async (req, res) => {
 
 export default {
   noteList,
-  noteSeachById,
   viewNoteSeachById,
   noteCreate,
   noteEditContentById,
-  noteAddEditerViewerById,
-  noteRemoveEditerViewerById,
   noteDeleteById,
 };

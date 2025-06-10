@@ -9,7 +9,7 @@
 <div class="container text-center mt-5 w-75 border-top border-secondary-subtle p-2" id="note-container">
   <div class="row justify-content-end my-2">
     <div class="col-4">
-      <form action="/api/protected/note" method="POST">
+      <form action="/api/protected/notes" method="POST">
         <button class="btn btn-primary rounded-pill">Create a new note</button>
       </form>
     </div>
@@ -18,7 +18,7 @@
     <% notes.map((note) => { %>
     <div class="col-4" style="height: 150px;" id="<%= note._id %>">
       <div class="bg-secondary border border-primary-subtle w-75 h-100 rounded-5 position-relative d-flex justify-content-center align-items-center">
-        <h4 class="text-break"><a href="/protected/view/note/<%= note._id %>"><%= note.title %></a></h4>
+        <h4 class="text-break"><a href="/protected/view/notes/<%= note._id %>"><%= note.title %></a></h4>
         <button class="btn btn-sm btn-danger rounded-pill note-delete-btn position-absolute delete-btn" data-bs-toggle="modal" data-bs-target="#deleteModal" data-note-id="<%= note._id %>"    data-note-title="<%= note.title %>" style="bottom: 5%; right: 5%" >
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>

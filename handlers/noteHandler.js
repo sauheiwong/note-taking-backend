@@ -101,7 +101,6 @@ const noteUpdateContentById = async (noteId, userId, body) => {
       runValidators: true,
     })
       .populate("owner", "username")
-
     return updatedNote;
   } catch (error) {
     throw error;
