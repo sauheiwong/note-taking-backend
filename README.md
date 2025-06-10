@@ -38,7 +38,7 @@ SECRET_KEY = Secret key for JWT token generation
    Change the API_BASE_URL in `public/config.js` to match your actual port number if different.
 
 ```javascript
-const API_BASE_URL = `http://localhost:${"Port number for your application (e.g., 3000)"}`; // change to your actual port number if different.
+const API_BASE_URL = `http://localhost:3000"}`; // change to your actual port number if different.
 ```
 
 ### Running the Application
