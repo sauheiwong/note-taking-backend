@@ -100,6 +100,12 @@ The project's API endpoints are primarily handled by `router.js` and associated 
   - **GET** `/api/logout`
   - **Description:** Logs out the current user and clears the session.
 
+- **Home Page (View)**
+
+  - **GET** `/home`
+  - **Description:** Renders the home page for authenticated users, displaying their notes.
+  - **Authentication:** Requires a valid session (protected by `requireLogin.requireLogin` middleware).
+
 ### Note-related APIs (Login Required)
 
 All note API and view routes under `/protected/notes` and `/protected/view/notes` require login.
