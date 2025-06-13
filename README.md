@@ -26,7 +26,7 @@ npm install
 
 3. **Set up environment variables**:
 
-Create a `.env` file in the root directory and add the following configuration:
+   Create a `.env` file in the root directory and add the following configuration:
 
 ```
 DB_URL = Your MongoDB connection string
@@ -35,6 +35,7 @@ SECRET_KEY = Secret key for JWT token generation
 ```
 
 4. **Change API_BASE_URL in public/config.js**:
+
    Change the API_BASE_URL in `public/config.js` to match your actual port number if different.
 
 ```javascript
@@ -198,10 +199,16 @@ All note API and view routes under `/protected/notes` and `/protected/view/notes
     }
     ```
 
-## Important Details
+## What I learned
 
 - **Auto Save:** The application could automatically save any changes made to the notes after `1` seconds of inactivity.
 
 - **Error Handling:** The application could handle errors gracefully and return appropriate error messages with status codes.
 
 - **Prevent Leaving Page:** Prevent users from leaving the page without saving their changes.
+
+- **DOM Purify:** The application uses DOMPurify to sanitize HTML content before rendering it on the client side and saving it in the database. This helps prevent XSS attacks.
+
+## Difficulties
+
+- **Auto Save And Seach by Title:** Implementing auto-save and seaching by title was challenging because it required debouncing and throttling techniques to optimize performance.
