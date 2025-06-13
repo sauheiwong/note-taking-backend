@@ -89,7 +89,9 @@ const noteUpdateContentById = async (noteId, userId, body) => {
     let { title, content } = body;
 
     const updateData = {};
-    if (title !== undefined) updateData.title = title;
+    if (title !== undefined){
+      updateData.title = DOMPurify.sanitize(title, { USE_PROFILES: { html: true } })
+    };
     if (content !== undefined) {
       content = DOMPurify.sanitize(content, {
         USE_PROFILES: { html: true }
