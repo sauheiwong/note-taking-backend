@@ -27,7 +27,7 @@ const noteSeach = async ({ title }, userId) => {
 const noteSeachById = async (noteId, userId) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(noteId)) {
-      throw myError.errorStatus("Invaild id", 400);
+      throw myError.errorStatus("Invalid id", 400);
     }
 
     const note = await Note.findById(noteId, {
@@ -68,7 +68,7 @@ const noteCreate = async (title, userId) => {
 const noteUpdateContentById = async (noteId, userId, body) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(noteId)) {
-      throw myError.errorStatus("Invaild id", 400);
+      throw myError.errorStatus("Invalid id", 400);
     }
 
     const note = await Note.findById(noteId, {
@@ -112,7 +112,7 @@ const noteUpdateContentById = async (noteId, userId, body) => {
 const noteDeleteById = async (noteId, userId) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(noteId)) {
-      throw myError.errorStatus("Invaild id", 400);
+      throw myError.errorStatus("Invalid id", 400);
     }
 
     const note = await Note.findById(noteId);

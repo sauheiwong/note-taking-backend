@@ -237,7 +237,7 @@ describe("user controller register", () => {
             json: jest.fn()
         }
 
-        const registerSpy = jest.spyOn(userHandler, "registerUser").mockRejectedValue(fakeUser)
+        const registerSpy = jest.spyOn(userHandler, "registerUser").mockResolvedValue(fakeUser)
 
         await userValidator.usernameValidator().run(req)
         await userValidator.passwordValidator().run(req)
@@ -273,7 +273,7 @@ describe("user controller register", () => {
             json: jest.fn()
         }
 
-        const registerSpy = jest.spyOn(userHandler, "registerUser").mockRejectedValue(fakeUser)
+        const registerSpy = jest.spyOn(userHandler, "registerUser").mockResolvedValue(fakeUser)
 
         await userValidator.usernameValidator().run(req)
         await userValidator.passwordValidator().run(req)

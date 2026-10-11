@@ -1,7 +1,7 @@
 import { describe, test, expect, jest, afterEach } from "@jest/globals";
 import userHandler from "../handlers/userHandler";
 import User from "../models/userModel";
-import bcrypt, { hash } from "bcryptjs";
+import bcrypt from "bcryptjs";
 
 const newUserInfo = {
     username: "Tommy",
